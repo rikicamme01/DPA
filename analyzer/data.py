@@ -53,15 +53,13 @@ class Data():
         for col in COLS_CHECKED:
             self.filter_dict[col] = df[col].unique().tolist()
         #controllo filter_dict
-
-
     def check_spelling_rep(self, filter_dict):
         if set(filter_dict['Repertorio']) <= set(RD):
             print('Tutti i repertori sono scritti correttamente 👍')
             return True
         print('Sono stati trovati repertori non ammessi. Controllare l\'ortografia')
         return False
-
+        
     def count_nan(self, dataframe):
         # controlla valori NaN in colonne 'Stralcio' e 'Repertorio' e 'Ads' -> nel caso raise errore miss
         # aggiorna attrib num stralci
@@ -224,6 +222,12 @@ class Data():
             new_df = pd.concat([new_df, frequency_df], ignore_index = True)
         return new_df
     
+    def dict_sunbrust(self, df):
+        df_values=self.df_freq(df, 'Repertorio')
+        freq_dict =dict(zip(df_values['Classe'], df_values['Frequenza']))
+        return freq_dict
+
+
     def duplica_ads(self, df):
         # Separare le stringhe nella colonna Ads
         df['Ads'] = df['Ads'].str.split(';')
